@@ -5,12 +5,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="heatmap.css"/>
 </head>
-<body style="margin:0; background-image: url('TODO: put your screenshot filename here'); background-repeat: no-repeat;">
-<canvas id="myCanvas" width="1920" height="1200" style="position: absolute; left: 0px; top: 0px">
+<body style="margin:0; background-image: url('CaptureB.png'); background-repeat: no-repeat;">
+<canvas id="myCanvas" width="1920" height="1160" style="position: absolute; left: 0px; top: 0px">
 <script>
 // TODO: in the line two lines above this one, replace the width and height values with the original resolution of your screenshot
 
-const CSV_NAME = 'TODO: put your CSV filename here';
+const CSV_NAME = 'Lavanya-0.csv';
 
 //ajax GET request to load the csv file and launch the animated replay code
 $(document).ready(function() {
@@ -32,7 +32,7 @@ function sleep(ms) {
 async function processData(allText) {
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
-	
+
   //split csv lines by return \n and by commas
   var allTextLines = allText.split(/\r\n|\n/);
 
@@ -53,6 +53,48 @@ async function processData(allText) {
   // and animate the user's eye gaze on the screen by drawing a
   // dot on the canvas to show where the user was looking over time.
   //
+
+  // Sets the fill color to green:
+  ctx.fillStyle = "#32CD32";
+
+  while(true) {
+    // Gets the first X, Y data for eye tracking
+    var firstData = allTextLines[1].split(",");
+    var prevX = parseFloat(firstData[0].substring(1, firstData[0].length - 1));
+    var prevY = parseFloat(firstData[1].substring(1, firstData[1].length - 1));
+
+
+    for (i = 1; i < allTextLines.length - 1; i++) {
+      var splitData = allTextLines[i].split(",");
+
+      var curX = parseFloat(splitData[0].substring(1, splitData[0].length - 1));
+      var curY = parseFloat(splitData[1].substring(1, splitData[1].length - 1));
+      var timeStamp = parseFloat(splitData[2].substring(1, splitData[2].length - 1));
+
+      await sleep(0.5);
+
+      ctx.fillRect(curX, curY, 10, 10)
+      // ctx.beginPath();
+      // ctx.moveTo(prevX, prevY);
+      // ctx.lineTo(curX, curY);
+      // ctx.stroke();
+
+      // Resets the prevX and prevY variables
+      prevX = curX
+      prevY = curY
+
+      // Resets the animation
+      if (i == allTextLines.length - 2) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // Clears the screen periodically
+      // if (i % 100 == 0) {
+      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // }
+    }
+  }
+
   // There are multiple ways this can be done, and the goal is just to
   // be able to visualize how the user looked at the page over time
   // The replay does not need to be exactly accurate to the time.
@@ -81,21 +123,6 @@ async function processData(allText) {
   // ctx.fillStyle
   //   which can be a color, like "rgb(255, 0, 0)" for red (keep the quotes).
   //   Set this before the ctx.fillRect() function call
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 </script>
