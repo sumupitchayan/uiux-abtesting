@@ -15,5 +15,5 @@ python-dateutil==1.5
 pytz==2013.7
 PyYAML==3.12
 six==1.4.1
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 zope.interface==4.1.1
