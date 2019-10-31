@@ -12,10 +12,11 @@ $(document).ready(function() {
   style = window.getComputedStyle(one);
   wdt = style.getPropertyValue("width");
   // TODO: change the wdt variable here to what the original resolution of your screenshot (probably about 1920 if you had it fullscreen)
+  wdt = 1920;
   two.style.width = wdt;
 });
 
-const CSV_NAME = 'TODO: put your CSV filename here';
+const CSV_NAME = 'Zoe-0.csv';
 
 //ajax GET request to load the csv file and launch the heatmap
 $(document).ready(function() {
@@ -31,8 +32,9 @@ $(document).ready(function() {
 function processData(allText) {
   //Split csv lines by return \n and by commas
   var allTextLines = allText.split(/\r\n|\n/);
+
   var datapoints = [];
-  
+
   // allTextLines is an array that has each line from
   // your data file as an element
   //
@@ -47,7 +49,7 @@ function processData(allText) {
   // var myfloat = parseFloat(mystring.substring(1, mystring.length-1));
 	// A heatmap data point looks like this object:
   //  {
-  //    x: ?, // x coordinate of the data point, a float 
+  //    x: ?, // x coordinate of the data point, a float
   //    y: ?, // y coordinate of the data point, a float
   //    value: 1 // leave at 1, but feel free to tweak for a hotter-looking heatmap
   //  }
@@ -56,6 +58,26 @@ function processData(allText) {
   // and put each data point in the datapoints array.
   // This datapoints array is then plotted on the heatmap (that part is already written below)
   //
+  const len = allTextLines.length;
+
+  for (i=1; i<len-1; i++){
+    var removeQuotes = allTextLines[i].replace(/"/g,"");
+    //var split = allTextLines[i].split(',');
+    //var float = parseFloat(split.substring(1,split.length-1));
+    //var splitX = split[0].replace(/"/g,"");
+    //var splitX2 = splitX.replace(/"/g,"");
+    //var splitY = split[1].replace(/"/g,"");
+    //var splitY2 = splitY.replace(/"/g,"");
+    var datapointFloat = {
+      x: parseFloat(removeQuotes.slice(0,5)),
+      y: parseFloat(removeQuotes.slice(6,11)),
+      //x: float[0],
+      //y: float[1],
+      value: 1
+    };
+    datapoints.push(datapointFloat);
+  }
+
   // Note that there is one more "TO DO" near the bottom of this file
 
 
@@ -88,7 +110,7 @@ function processData(allText) {
 <body style="margin:0">
 <h2>Heatmap</h2>
 <div id="one" class="heatmap" style="position: relative;">
-<img id="two" class="heatmap-canvas" id="heatmap-canvas" style="position: absolute; left: 0px; top: 0px" src="TODO: put your screen capture image filename here">
+<img id="two" class="heatmap-canvas" id="heatmap-canvas" style="position: absolute; left: 0px; top: 0px" src="CaptureA.PNG"> #screenshot of the capture.
 </div>
 </body>
 </html>
