@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript">
+        var timerStart = Date.now();
+        console.log('Page Load:' + timerStart)
+        var uniq_session = timerStart;
+
+        var cookie = getCookie('uid');
+
+        var uniq_session = cookie;
+
+        if(cookie == '' || cookie == null) {
+          var uid = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12);
+          console.log('uid:' + uid)
+          setCookie('uid', uid,  40)
+          cookie = getCookie('uid');
+          uniq_session = cookie;
+        }
+        function setCookie(cname, cvalue, exdays) {
+          var d = new Date();
+          d.setTime(d.getTime() + (exdays*24*60*60*1000));
+          var expires = "expires="+ d.toUTCString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+          var name = cname + "=";
+          var decodedCookie = decodeURIComponent(document.cookie);
+          var ca = decodedCookie.split(';');
+          for(var i = 0; i <ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+              }
+          }
+          return "";
+        }
+
+        console.log('version A: cookie:' + cookie)
+    </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- TODO: Feel free to modify anything inside main.css-->
+    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+
+      #dropdown_wrapper {
+        padding-left: 40px;
+      }
+
+      .dropbtn {
+        background-color: grey;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        text-align: center;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #ddd;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown:hover .dropbtn {
+        background-color: black;
+      }    
+    
+    </style>
+
+    <title>Find Memphis Taxis online</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Memphis Taxis: Version A </h1>
+      <p>This page contains information about taxi and cab companies in Memphis, Tennessee.</p>
+      <p>Not endorsed by any of the companies listed, or the city of Memphis.</p>
+    </header>
+
+    <!--
+    TODO: Feel free to modify image, change layouts, appearance etc anything.
+    Remember if you add any new buttons, you need to update the javascript file, for
+    corresponding button id, so that clicks of that button could be logged.
+
+    Easiest thing is to have just the two buttons we already have and try to play around
+    with layouts of it.
+    -->
+    <div id="dropdown_wrapper">
+      <div class="dropdown">
+        <button class="dropbtn">Hover to see options</button>
+        <div class="dropdown-content">
+          <button class="vendor-book-button btn btn-primary" type="submit" id="mp1">YellowCab Taxis</button>
+          <button class="vendor-book-button btn btn-primary" type="submit" id="mp2">RideCharge taxi</button>
+          <button class="vendor-book-button btn btn-primary" type="submit" id="mp3">Memphis Uber</button>
+          <button class="vendor-book-button btn btn-primary" type="submit" id="mp4">Premier taxi</button>
+          <!-- <a href="#">Reserve with YellowCab</a>
+          <a href="#">Reserve with RideCharge taxi</a>
+          <a href="#">Reserve with Memphis Uber</a>
+          <a href="#">Reserve with Premier taxi</a> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="vendor-wrapper">
+      <img src="../static/memphis.png" class="vendor-photo" />
+      <button class="vendor-book-button btn btn-primary" type="submit" id="mp1">Reserve with YellowCab
+          Taxis</button>
+                <p>Safe, Reliable Taxi Services from Yellow Cab and Checker Cab are available
+              in the Memphis Metro area 24 hours a day.</p>
+    </div>
+    <div class="vendor-wrapper">
+      <img src="../static/memphis2.png" class="vendor-photo" />
+      <button class="vendor-book-button btn btn-primary" type="submit" id="mp2">Reserve with RideCharge taxi</button>
+         <p>Our drivers are the most professional drivers in the industry. Our drivers
+              are licensed and required to successfully complete a formal training.</p>
+    </div>
+
+    <div class="vendor-wrapper">
+    <img src="../static/uber.png" class="vendor-photo" />
+
+    <button class="vendor-book-button btn btn-primary" type="submit" id="mp3">Reserve with Memphis Uber</button>
+     <p> We are so much cheaper than taxis..! </p>
+    </div>
+
+    <div class="vendor-wrapper">
+      <img src="../static/premiere.png" class="vendor-photo" />
+      <button class="vendor-book-button btn btn-primary" type="submit" id="mp4">Reserve with Premier taxi</button>
+       <p>Our goal is to efficiently
+              transport our passengers in a safe, polite and timely manner at a fair
+              price.</p>
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+        var timeLoaded = Date.now()
+          $(document).ready(function() {
+            timeLoaded =  Date.now();
+            console.log('Page Load:' + timeLoaded)
+            sendData(timeLoaded, 0.0, 0.0, uniq_session)
+          });
+
+        $("#mp1").on("click", function(d) {
+              // Retrieve the object from storage
+              var clickTime = Date.now()
+              var clickObjectID = 'mp1'
+              console.log('Click Time:' + clickTime)
+              sendData(timeLoaded, clickTime, clickObjectID, uniq_session)
+              // TODO: Feel free to make this point to different site
+              window.location.href = "http://www.yellowcabofmemphis.com/"
+
+        })
+
+
+        $("#mp2").on("click", function(d) {
+              // Retrieve the object from storage
+              var clickTime = Date.now()
+              var clickObjectID = 'mp2'
+              console.log('Click Time:' + clickTime)
+              sendData(timeLoaded, clickTime, clickObjectID, uniq_session)
+              // TODO: Feel free to make this point to different site
+              window.location.href = "https://www.ridecharge.com/s/tn-memphis/taxi-sedan-limo-shuttle"
+        })
+
+          $("#mp3").on("click", function(d) {
+              // Retrieve the object from storage
+              var clickTime = Date.now()
+              var clickObjectID = 'mp3'
+              console.log('Click Time:' + clickTime)
+              sendData(timeLoaded, clickTime, clickObjectID, uniq_session)
+              // TODO: Feel free to make this point to different site
+              window.location.href = "https://www.uber.com/cities/memphis/"
+        })
+
+            $("#mp4").on("click", function(d) {
+              // Retrieve the object from storage
+              var clickTime = Date.now()
+              var clickObjectID = 'mp4'
+              console.log('Click Time:' + clickTime)
+              sendData(timeLoaded, clickTime, clickObjectID, uniq_session)
+              // TODO: Feel free to make this point to different site
+              window.location.href = "https://premierofmemphis.com/contact-us/"
+        })
+
+
+        function sendData(timeLoaded, clickTime, clickObjectID, cook){
+              var dataObj = { 'version': 'A', 'pageLoadTime': timeLoaded , 'clickTime': clickTime , 'HtmlElementID': clickObjectID, 'UniqueSession' :uniq_session};
+              console.log(JSON.stringify(dataObj))
+               $.ajax({
+                   type: 'POST',
+                    url: '/data',
+                    async: false,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataObj),
+                    success: function(callback) {
+                        console.log(callback);
+                    },
+                    error: function() {
+                        $(this).html("error!");
+                    }
+              });
+        }
+     </script>
+  </body>
+</html>

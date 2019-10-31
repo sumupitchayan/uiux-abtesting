@@ -57,23 +57,27 @@ async function processData(allText) {
   // Sets the fill color to green:
   ctx.fillStyle = "#32CD32";
 
+  // Continuously loops the animation
   while(true) {
     // Gets the first X, Y data for eye tracking
     var firstData = allTextLines[1].split(",");
     var prevX = parseFloat(firstData[0].substring(1, firstData[0].length - 1));
     var prevY = parseFloat(firstData[1].substring(1, firstData[1].length - 1));
 
-
+    // Loops through the data
     for (i = 1; i < allTextLines.length - 1; i++) {
       var splitData = allTextLines[i].split(",");
 
+      // Variables only used when drawing lines instead of squares:
       var curX = parseFloat(splitData[0].substring(1, splitData[0].length - 1));
       var curY = parseFloat(splitData[1].substring(1, splitData[1].length - 1));
       var timeStamp = parseFloat(splitData[2].substring(1, splitData[2].length - 1));
 
+      // Adds 0.5ms delay to animation
       await sleep(0.5);
 
       ctx.fillRect(curX, curY, 10, 10)
+      // Code to Draw lines between points instead of creating rectangles:
       // ctx.beginPath();
       // ctx.moveTo(prevX, prevY);
       // ctx.lineTo(curX, curY);
@@ -83,15 +87,10 @@ async function processData(allText) {
       prevX = curX
       prevY = curY
 
-      // Resets the animation
+      // Resets the animation when at the end
       if (i == allTextLines.length - 2) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-
-      // Clears the screen periodically
-      // if (i % 100 == 0) {
-      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // }
     }
   }
 
